@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" name="" step="any" id="data"/> Celcius
+    <button onClick="ft()" >Convert</button>
+    <h1 id="res">Result coming soon</h1>
+    <script>
+        ft=()=> {
+            var cel=document.getElementById("data").value;
+            var fat=(cel*1.8)+32; 
+            document.getElementById("res").innerText=`${fat}`;  
+                  
+        }
+    </script>
+</body>
+</html>

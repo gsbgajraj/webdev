@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MP4 to MP3 Converter</title>
+</head>
+<body>
+  <h1>MP4 to MP3 Converter</h1>
+  <input type="file" id="fileInput" accept=".mp4" />
+  <button onclick="convertToMP3()">Convert</button>
+  <a id="downloadLink" style="display: none;" download="converted.mp3">
+    <button id="downloadButton" disabled>Download MP3</button>
+  </a>
+
+  <!-- Include the ffmpeg.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/ffmpeg.js@0.9.4/ffmpeg.min.js"></script>
+
+  <script>
+    async function convertToMP3() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('Please select an MP4 file first.');
+        return;
+      }
+
+      if (!file.type.startsWith('video/mp4')) {
+        alert('Please select an MP4 file.');
+        return;
+      }
+
+      // Read the MP4 file as an array buffer
+      const arrayBuffer = await file.arrayBuffer();
+
+      // Initialize FFmpeg with the ffmpeg.js library
+      const ffmpeg = createFFmpeg({
+        log: true,
+        corePath: 'https://cdn.jsdelivr.net/npm/ffmpeg.js@0.9.4/ffmpeg-core.js',
+      });
+
+      // Load the FFmpeg library
+      await ffmpeg.load();
+
+      // Write the input file to FFmpeg's virtual file system
+      ffmpeg.FS('writeFile', 'input.mp4', new Uint8Array(arrayBuffer));
+
+      // Run FFmpeg to convert MP4 to MP3
+      await ffmpeg.run('-i', 'input.mp4', 'output.mp3');
+
+      // Read the converted MP3 file from FFmpeg's virtual file system
+      const data = ffmpeg.FS('readFile', 'output.mp3');
+
+      // Create a Blob with the converted MP3 data
+      const blob = new Blob([data.buffer], { type: 'audio/mpeg' });
+
+      // Create a download link and update its attributes
+      const downloadLink = document.getElementById('downloadLink');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.style.display = 'block';
+
+      // Update the download button
+      const downloadButton = document.getElementById('downloadButton');
+      downloadButton.disabled = false;
+
+      // Clean up FFmpeg and remove temporary files
+      ffmpeg.FS('unlink', 'input.mp4');
+      ffmpeg.FS('unlink', 'output.mp3');
+      ffmpeg.exit();
+    }
+  </script>
+</body>
+</html>

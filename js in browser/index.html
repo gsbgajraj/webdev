@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="js01.js">
+    <title>first</title>
+</head>
+<body>
+    <h1 onclick="clicking2()">this is Gajraj Singh Bhati</h1>
+    <h2 id="js"></h2>
+    <h3 id="main-heading"> i am main heading</h3>
+    <script>
+        document.getElementById("js").innerHTML="i am web developer";
+        var target=document.querySelector("body")
+        function clickingonscreen()
+        {
+          console.log("clicked the body")   
+        }
+        target.addEventListener("click",clickingonscreen)
+        function clicking2(){
+            console.log("clicked the heading")
+        }
+        getElementById("main-heading")
+    </script>
+</body>
+</html>

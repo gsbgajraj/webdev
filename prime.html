@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>program to check the number is even or odd</h1>
+    <input type="number" id="num"/>
+    <button onclick="prime()">Check</button>
+    <h2 id="result">Result will come here</h2>
+    <script>
+            prime=()=>{
+                var num=document.getElementById("num").value;
+                var result;
+                if(num==1)
+                {
+                    result="number is neither prime nor composite";
+                }
+                else if(num<1)
+                {
+                    result="enter numbers greater than 0 only";
+                }
+                else{
+                    for(var i=2;i<num;i++)
+                    {
+                       if(num%i==0)
+                       {
+                        result="no is not a prime";
+                        break;
+                       } 
+                       else
+                       {
+                        result="number is a prime number";
+                       }
+                    }
+                }
+                document.getElementById("result").innerText=`${result}`;
+            }
+    </script>
+</body>
+</html>
